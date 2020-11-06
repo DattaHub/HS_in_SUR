@@ -1,0 +1,21 @@
+#PBS -N SSURsim
+#PBS -V
+#PBS -q iamcs
+#PBS -l nodes=1:ppn=8,walltime=30:00:00
+
+cd $PBS_O_WORKDIR
+
+export LD_LIBRARY_PATH="/apps/matlab/R2010b/bin/glnxa64":"/apps/matlab/R2010b/sys/os/glnxa64":"/apps/matlab/R2010b/runtime/glnxa64"
+export job_number=`echo $PBS_JOBID | awk -F. '{print $1}'`1
+./swapsim &
+sleep 1
+
+wait
+exit 0
+
+
+
+
+ 
+
+
