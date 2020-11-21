@@ -4,7 +4,7 @@
 
 **"Joint mean–covariance estimation via the horseshoe"**
 **Authors: Yunfan Li, Jyotishka Datta, Bruce A. Craig, Anindya Bhadra**
-Preprint: (https://arxiv.org/abs/1903.06768)[https://arxiv.org/abs/1903.06768]
+Preprint: [https://arxiv.org/abs/1903.06768](https://arxiv.org/abs/1903.06768) 
 
 
 ## Description:
