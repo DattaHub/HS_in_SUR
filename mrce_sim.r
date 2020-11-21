@@ -1,14 +1,52 @@
+##-----------------------------------------------------------------------------------------------
+## TITLE:        mrce_sim.r reads data, estimates the parameters & calculates some errors by MRCE.
+##
+## VERSION:      1st version (11/20/2020).
+##
+## AUTHORS:      Yunfan Li, Jyotishka Datta, Bruce A. Craig, Anindya Bhadra,
+##
+## DESCRIPTION:  This function runs MRCE method for saved simulated data. For details see:
+## A. J. Rothman, E. Levina, J. Zhu, Sparse multivariate regression with covariance estimation, Journal of Computational and Graphical Statistics
+## 19 (2010) 947-962.
+##
+## DEPENDS ON:  R package MRCE (https://cran.r-project.org/src/contrib/Archive/MRCE/).
+##              R package QUIC (https://cran.r-project.org/src/contrib/Archive/QUIC/QUIC_1.1.1.tar.gz)
+##-----------------------------------------------------------------------------------------------
 
-if (!require(MRCE)) install.packages('MRCE')
+
+
+
+
+mrce_url <- "https://cran.r-project.org/src/contrib/Archive/MRCE/MRCE_2.1.tar.gz"
+mrce_pkgFile <- "MRCE_2.1.tar.gz"
+download.file(url = mrce_url, destfile = mrce_pkgFile)
+
+# Install dependencies
+
+quic_url <- "https://cran.r-project.org/src/contrib/Archive/QUIC/QUIC_1.1.1.tar.gz"
+quic_pkgFile <- "QUIC_1.1.1.tar.gz"
+download.file(url = quic_url, destfile = quic_pkgFile)
+install.packages(pkgs=quic_pkgFile, type="source", repos=NULL)
+
+if (!require(MRCE)) install.packages(pkgs=mrce_pkgFile, type="source", repos=NULL)
 library(MRCE)
 
+if (!require(here)) install.packages('here')
+
+detach("package:here", unload=TRUE)
+library(here)
+
+data_folder = file.path(here(), "data")
+setwd(data_folder)
+
 i = 1
-#args = commandArgs(TRUE)
-#eval(parse(text=args))
+args = commandArgs(TRUE)
+eval(parse(text=args))
+
 name0 = 'p120q50_ar1'
 name = paste(name0,i,sep='')
-n = 100; p = 50; q = 25
-Y = read.csv(file=paste("DbHS_",name,"_Y.csv",sep=""),header=F)
+n = 100; p = 120; q = 50
+Y = read.csv(file=paste0("DbHS_",name,"_Y.csv",sep=""),header=F)
 X = read.csv(file=paste("DbHS_",name,"_X.csv",sep=""),header=F)
 B = read.csv(file=paste("DbHS_",name0,"_B.csv",sep=""),header=F)
 Omega_true = read.csv(file=paste("DbHS_",name0,"_Omega.csv",sep=""),header=F)
@@ -18,8 +56,8 @@ save(B, Omega_true, file = paste("MRCE_",name0,".RData",sep=""))
 
 #for higher dimensions, the range of tuning parameters may need to be made smaller
 #for better estimates, use finer intervals
-lam1.vec = rev(exp(seq(from=-5, to=0, by=0.5)))
-lam2.vec = rev(exp(seq(from=-5, to=0, by=0.5)))
+lam1.vec = rev(exp(seq(from=-2, to=0, by=0.5)))
+lam2.vec = rev(exp(seq(from=-2, to=0, by=0.5)))
 t0 = proc.time()
 cvfit = mrce(X=X, Y=Y, lam1.vec = lam1.vec, lam2.vec = lam2.vec, method="cv",
 	cov.maxit=30, maxit.out=30, maxit.in=30)

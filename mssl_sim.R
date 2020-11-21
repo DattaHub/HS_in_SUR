@@ -1,8 +1,19 @@
-#The package 'mSSL' has to be installed
-#from https://github.com/skdeshpande91/multivariate_SSL
-#before running this file.
+##-----------------------------------------------------------------------------------------------
+## TITLE:        mssl_sim.r reads data, estimates the parameters & calculates some errors by mSSL.
+##
+## VERSION:      1st version (11/20/2020).
+##
+## AUTHORS:      Yunfan Li, Jyotishka Datta, Bruce A. Craig, Anindya Bhadra,
+##
+## DESCRIPTION:  This function runs mSSL method for saved simulated data for 50 replicates parallely. For details see:
+##                S. K. Deshpande, V. Rockova, E. I. George, Simultaneous variable and covariance selection with the multivariate spike-and-slab lasso, Journal
+##                of Computational and Graphical Statistics 28 (2019) 921-931.
+##
+## DEPENDS ON:  R package mSSL (https://github.com/skdeshpande91/multivariate_SSL)
+##              Also, devtools, Rcpp, RcppArmadillo, SSLASSO, MASS, here, parallel, foreach.
+##-----------------------------------------------------------------------------------------------
 
-rm(list = ls())
+
 
 library(devtools)
 library(Rcpp)
@@ -15,9 +26,13 @@ library(SSLASSO)
 library(MASS)
 library(mSSL)
 
-base_dir = "C:/Users/jd033/OneDrive/Documents/R/HSGHS"
+## Setting path variables
+if (!require(here)) install.packages('here')
+detach("package:here", unload=TRUE)
+library(here)
 
-setwd(paste0(base_dir,"/data"))
+data_folder = file.path(here(), "data")
+setwd(data_folder)
 
 # Create cluster for parallel run
 library(pacman)
@@ -33,7 +48,7 @@ niter = 50
 res<- foreach(i = 1:niter, .packages = c("SSLASSO", "MASS","mSSL"))%dopar%{
   name0 = 'p120q50_ar1'
   name = paste0(name0,i)
-  n = 100; p = 200; q = 25
+  n = 100; p = 120; q = 50
   Y = read.csv(file=paste("DbHS_",name,"_Y.csv",sep=""),header=F)
   Y = as.matrix(Y)
   X = read.csv(file=paste("DbHS_",name,"_X.csv",sep=""),header=F)
@@ -125,7 +140,7 @@ res<- foreach(i = 1:niter, .packages = c("SSLASSO", "MASS","mSSL"))%dopar%{
 
 stopCluster(cl)
 
-save(res, file = paste0("sim_results_table", name,".RData"))
+save(res, file = paste0("mssl_sim_results_table", name,".RData"))
 
 mssl_results = matrix(0, niter, 11)
 

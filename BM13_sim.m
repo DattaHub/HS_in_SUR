@@ -1,14 +1,30 @@
+%-----------------------------------------------------------------------------------------------
+% TITLE:        BM13_sim.r reads data, estimates the parameters & calculates some errors by BM13.
+%
+% VERSION:      1st version (11/20/2020).
+%
+% AUTHORS:      Yunfan Li, Jyotishka Datta, Bruce A. Craig, Anindya Bhadra,
+%
+% DESCRIPTION:  This function runs mSSL method for saved simulated data for 50 replicates parallely. For details see:              
+%               A. Bhadra, B. K. Mallick, Joint high-dimensional Bayesian variable and covariance selection with an application to eQTL analysis, Biometrics
+%               69 (2013) 447–457.
+%
+% DEPENDS ON:  
+%%-----------------------------------------------------------------------------------------------
+
 
 i = 1;
 name0 = 'p120q50_ar1'
 name = [name0 num2str(i)]
 
-n = 100; p = 50; q = 25;
+data_folder = [pwd filesep 'data' filesep];
 
-X = csvread(strcat('DbHS_',name,'_X.csv'));
-Y = csvread(strcat('DbHS_',name,'_Y.csv'));
-B = csvread(strcat('DbHS_',name0,'_B.csv'));
-Omega_true = csvread(strcat('DbHS_',name0,'_Omega.csv'));
+n = 100; p = 120; q = 50;
+
+X = csvread(strcat(data_folder,'DbHS_',name,'_X.csv'));
+Y = csvread(strcat(data_folder,'DbHS_',name,'_Y.csv'));
+B = csvread(strcat(data_folder,'DbHS_',name0,'_B.csv'));
+Omega_true = csvread(strcat(data_folder,'DbHS_',name0,'_Omega.csv'));
 
 %%%%%% Set MCMC prior parameters and length of MCMC run%%%%%%%%%%%
 %c=0.0005;
@@ -92,8 +108,8 @@ nonzerobeta_mse = mean((meanB(B>0)-B(B>0)).^2)
 omega_mse = mean(mean((Omega_est-Omega_true).^2))
 diagomega_mse = mean((diag(Omega_est)-diag(Omega_true)).^2)
 %Prediction MSE
-test_X = csvread(strcat('DbHS_',name,'_Xtest.csv'));
-test_Y = csvread(strcat('DbHS_',name,'_Ytest.csv'));
+test_X = csvread(strcat(data_folder,'DbHS_',name,'_Xtest.csv'));
+test_Y = csvread(strcat(data_folder,'DbHS_',name,'_Ytest.csv'));
 predict_Y = test_X*meanB;
 predict_mse = mean(mean((predict_Y-test_Y).^2))
 %Average KL divergence

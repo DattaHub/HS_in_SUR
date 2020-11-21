@@ -1,14 +1,32 @@
+##-----------------------------------------------------------------------------------------------
+## TITLE:        capme_sim.r reads data, estimates the parameters & calculates some errors by CAPME.
+##
+## VERSION:      1st version (11/20/2020).
+##
+## AUTHORS:      Yunfan Li, Jyotishka Datta, Bruce A. Craig, Anindya Bhadra,
+##
+## DESCRIPTION:  This function runs CAPME method for saved simulated data. For details see:
+## T. T. Cai, H. Li, W. Liu, J. Xie, Covariate-adjusted precision matrix estimation with an application in genetical genomics, Biometrika 100
+## (2012) 139-156.
+##
+## DEPENDS ON:  R package capme (https://cran.r-project.org/src/contrib/Archive/capme/). and "functions_utility_stat.R")
+##-----------------------------------------------------------------------------------------------
 
-#The package 'CAPME' has to be installed
-#from https://cran.r-project.org/src/contrib/Archive/capme/
-#before running this file.
 
-#args = commandArgs(TRUE)
-#eval(parse(text=args))
+capme_url <- "https://cran.r-project.org/src/contrib/Archive/capme/capme_1.3.tar.gz"
+capme_pkgFile <- "capme_1.3.tar.gz"
+download.file(url = capme_url, destfile = capme_pkgFile)
+
+if (!require(capme)) install.packages(pkgs=capme_pkgFile, type="source", repos=NULL)
+library(capme)
+
+args = commandArgs(TRUE)
+eval(parse(text=args))
+
 i = 1
 name0 = 'p120q50_ar1'
 name = paste(name0,i,sep='')
-n = 100; p = 50; q = 25
+n = 100; p = 120; q = 50
 Y = read.csv(file=paste("DbHS_",name,"_Y.csv",sep=""),header=F)
 X = read.csv(file=paste("DbHS_",name,"_X.csv",sep=""),header=F)
 B = read.csv(file=paste("DbHS_",name0,"_B.csv",sep=""),header=F)
