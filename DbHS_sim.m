@@ -23,6 +23,10 @@
 %% Generating B and Omega 
 
 clear all
+
+% Uncomment the following lines if you don't want to use a for loop but run
+% the code on a server (needs additional set-ups)
+
 %i=getenv('i')
 %i=str2num(i)
 % i = 1;
@@ -31,10 +35,10 @@ data_folder = [pwd filesep 'data' filesep];
 
 
 for i = 1:50
-    name0 = 'p200q25_ar1';
+    name0 = 'p120q50_ar1';
     name = [name0 num2str(i)];
 
-    n = 100; p = 200; q = 25;
+    n = 100; p = 120; q = 50;
 
     %Random generator for coefficients and precision matrix
     rng(2018)
