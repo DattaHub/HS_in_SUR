@@ -9,7 +9,10 @@
 %               A. Bhadra, B. K. Mallick, Joint high-dimensional Bayesian variable and covariance selection with an application to eQTL analysis, Biometrics
 %               69 (2013) 447–457.
 %
-% DEPENDS ON:  
+% DEPENDS ON:   This depends on a few additional Matlab codes, e.g.
+% SSUR_swap.m - these are all saved in the subfolder "helper_files" which
+% is added to the search path using the 'addpath' command at the beginning
+% of this code. 
 %%-----------------------------------------------------------------------------------------------
 
 file_folder = [pwd filesep 'helper_files' filesep];
