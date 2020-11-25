@@ -146,8 +146,8 @@ for i = 1:50
     test_X = mvnrnd(zeros(m,p), Sigma_X);
     test_E = mvnrnd(zeros(m,q), Sigma_true);
     test_Y = test_X*B + test_E;
-    csvwrite(strcat(pwd,'\data\DbHS_',name,'_Xtest.csv'),test_X) % change to appropriate folder 
-    csvwrite(strcat(pwd,'\data\DbHS_',name,'_Ytest.csv'),test_Y)
+    csvwrite(strcat(data_folder,'DbHS_',name,'_Xtest.csv'),test_X) % change to appropriate folder 
+    csvwrite(strcat(data_folder,'DbHS_',name,'_Ytest.csv'),test_Y)
 
 end
 

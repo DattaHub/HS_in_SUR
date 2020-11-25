@@ -12,6 +12,8 @@
 % DEPENDS ON:  
 %%-----------------------------------------------------------------------------------------------
 
+file_folder = [pwd filesep 'helper_files' filesep];
+addpath(file_folder);
 
 i = 1;
 name0 = 'p120q50_ar1'
