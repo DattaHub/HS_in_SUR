@@ -5,7 +5,7 @@
 %
 % AUTHORS:      Yunfan Li, Jyotishka Datta, Bruce A. Craig, Anindya Bhadra,
 %
-% DESCRIPTION:  This function runs mSSL method for saved simulated data for 50 replicates parallely. For details see:              
+% DESCRIPTION:  This function runs BM13 method for saved simulated data for 50 replicates parallely. For details see:              
 %               A. Bhadra, B. K. Mallick, Joint high-dimensional Bayesian variable and covariance selection with an application to eQTL analysis, Biometrics
 %               69 (2013) 447–457.
 %
