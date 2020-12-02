@@ -20,6 +20,14 @@ download.file(url = capme_url, destfile = capme_pkgFile)
 if (!require(capme)) install.packages(pkgs=capme_pkgFile, type="source", repos=NULL)
 library(capme)
 
+## Setting path variables
+if (!require(here)) install.packages('here')
+detach("package:here", unload=TRUE)
+library(here)
+
+data_folder = file.path(here(), "data")
+setwd(data_folder)
+
 args = commandArgs(TRUE)
 eval(parse(text=args))
 
